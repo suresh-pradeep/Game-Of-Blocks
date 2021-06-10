@@ -15,12 +15,27 @@ This is the implementation of a smart contract in which the owner initially has 
 - constructor of MetaCoin: It updates the entry corresponding to the owner's address to 100000 in the balances mapping
 - constructor of Loan: It sets the Owner address to the node that deploys the contract. It further emits the event OwnerSet into the network
 ### Function modifiers:
--IsOwner: Checks if the calling node is the owner of the contract
+- IsOwner: Checks if the calling node is the owner of the contract
 ## Instructions for testing and running Contract
 - Copy the contents of assgn2.sol and paste it in a new file in Remix IDE online.
 - Compile the file using Solidity compiler. Then use the deploy and run transactions menu.
-- Deploy the contract from one account say acc1.
-- Now select a different account and call reqLoan from the account by passing appropriate parameters.
-Sample arguments: principal-19750, rate-6, time-2
-
-
+- Deploy the contract from one account say acc1. Call getOwnerBalance() to confirm if the constructor has successfully initialised the value. It should return 100000.
+- Now select a different account say acc2
+    - call reqLoan from the account by passing appropriate parameters.Sample arguments: principal-19750, rate-5, time-2
+    - The same arguments can be passed to getCompoundInterest function to display the dues that have been updated in the loans mapping. It should be 21773 for the sample arguments.
+    - Copy the address of acc2 using the option near account
+    - Pass the address to viewDues function and confirm that access is denied as given account is not Owner
+    - Pass the same address to getBalance() function and confirm that the balances to all non-owner accounts is zero to start with.
+    - Call getOwnerBalance to confirm access to function from other accounts. It should return 100000.
+- Now select account as acc1
+    - Pass address of acc2 that is already copied to viewDues function and make a call. It should return 21773 for the sample arguments.
+    - Pass the same address to settleDues fucntion and make a call.
+    - Pass the same address to getBalance function and make a call. It should return 21773 for the sample argument indicating that the loan debt has been transferred to the account
+    - Pass the same address to viewDues function and make a call. It should return 0 indicating that dues have been cleared and the pending loan has been set to zero
+    - Call getOwnerBalance function to confirm that the transferred amount has been debited from the owner balance. It should return 78227 for the sample arguements
+- This template can be followed from multiple accounts by requesting loans and settling dues
+- Further, following types of function calls can be made to test if the contract ignores/rejects such transactions
+    - Principal,rate and time can be passed outside the above specified range to reqLoan
+    - Dues can be viewed/settled for an address which hasn't requested debt amount using viewDues/settleDues
+    - viewDues/settleDues can be called from non-owner account to check access
+    - Owner can be requested to clear dues that amount to more than the owner balance i.e. settleDues will return false if debt in loans mapping is more than owner balance.
