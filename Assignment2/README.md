@@ -1,6 +1,6 @@
 # Smart Contract Based Loan Repayment
 This is the implementation of a smart contract in which the owner initially has a balance of 100K MetaCoins acquired by taking loans. The debt the owner owes to a particular node is stored in a mapping called loans and is updated once a given node requests for the loan using ReqLoan function. The owner can view the dues that he/she has to a given node and choose to settle it.
-## Instructions to Run various functions of the contract and how they work
+## How the functions of the contract work
 ### Publically visible functions are:
 - reqLoan(uint256 principle, uint rate, uint time): Arguments passsed are principal,rate and time as integers. Rate passed has to be an integer from 0 to 100. The function calls getCompundInterest() with the passed arguments and checks if the passed arguments are within the meaningful range(0-100 for rate,>0 for time,<100000 for principal). If they arguments are meaningful, it updates the debt in loans mapping,emits the event Request into the network and returns true. If not, it returns false and no updation is made.
 - sendCoin(address receiver, uint256 amount, address sender): This is a function of the MetaCoin contract that implements the transfer of coins from the sender to receiver using balances mapping and emits the event Transfer into the network
