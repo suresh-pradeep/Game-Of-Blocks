@@ -48,40 +48,44 @@ The Voting Period is ended by the Chairperson, and all interaction with the cont
 The contract then returns the winning candidate to the Chairperson and emits his address, all according to the rules of instant run-off election mechanism, with certain drawbacks mentioned above.  
 If there is indeed, a draw, the Chairperson has to re-initiate the contract, or can opt for changing the period back to 2, i.e. the Voting Period.
 
-![flowchart](./assets/instant-runoff-voting-diagram.png)
+<img src="./assets/instant-runoff-voting-diagram.png" width="700" />
 
 ## Implementing IRV - Functions involved
 
-- Constructor
+- constructor()
 
 period = 1 starts
+registrationSession
 
-- registrationSession
-- rightToVoteAskingPart
-- rightToVoteConfirmation
-- rightToCandidatureAskingPart
-- rightToCandidatureConfirmation
+- RequestVotingRights()
+- ApproveVoters()
+- RequestCandidature(string memory name)
+- ApproveCandidature()
+- closeRegistrationPeriod()
 
 period = 2 starts
 votingSession
 
-- showCandidate(i)
-- showCandidates(return string (delimiter (i)))
-- vote
+- CheckNumberOfCandidates()
+- CheckCandidateName(uint256 k)
+- vote(uint256[] memory preferenceList)
 
 countingSession
 period = 3 starts
 
-- mainCalculation
-- majorityElseEliminated
-- eliminateCandidates
+- mainCalculation()
+- majorityOrEliminatedCandidate()
+- eliminateCandidate(uint256 indexOfLosingCandidate)
 
 ## Approach Layout
 
 Rest of approach and smaller details are explained in a-not-so-properly explained manner in [approach.txt](./approach.txt)
 
+Test Election tried on [REMIX IDE](https://remix.ethereum.org/)
+![screenshotOfElectionInRemix](./assets/output_with_winner2.png)
+
 ## Team
 
-- S. Pradeep
-- Piyush Beegala
-- B. Anshuman
+- [S. Pradeep](https://github.com/suresh-pradeep)
+- [Piyush Beegala](https://github.com/franticalien)
+- [B. Anshuman](https://github.com/ba-13)
